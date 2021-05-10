@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.colin.mapper.EssayMapper">
+    <resultMap id="loginUserAllEssay" type="com.colin.bean.User">
+        <id property="id" column="uId"/>
+        <result property="name" column="name"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="postTime" column="uPostTime"/>
+        <result property="tel" column="tel"/>
+        <result property="sex" column="sex"/>
+        <result property="age" column="age"/>
+        <collection property="essayList" ofType="com.colin.bean.Essay" >
+            <id property="id" column="eId"/>
+            <result property="essayName" column="essay_name"/>
+            <result property="essayClassificationId1" column="essay_classification_id"/>
+            <result property="essayContent" column="essay_content"/>
+            <result property="essayLabel" column="essay_label"/>
+            <result property="insertTime" column="insert_time"/>
+            <result property="postTime" column="ePostTime"/>
+        </collection>
+    </resultMap>
+    <select id="loginUserAllEssay" resultMap="loginUserAllEssay">
+        SELECT u.id uId,name,username,password,u.post_time uPostTime,tel,sex,age,
+               e.id eId,essay_name,essay_classification_id,essay_content,essay_label,insert_time,e.post_time ePostTime
+        FROM t_user u LEFT JOIN t_essay e ON u.id=e.essay_user_id WHERE u.id=#{id};
+    </select>
+</mapper>
